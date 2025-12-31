@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 // signup End point
-app.post("api/v1/signup", async (req: Request, res: Response) => {
+app.post("/api/v1/signup", async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
     const validate = signupschema.safeParse(req.body);
     if (!validate.success) {
@@ -39,7 +39,7 @@ app.post("api/v1/signup", async (req: Request, res: Response) => {
 });
 
 // signin End point
-app.post("api/v1/signin", async (req: Request, res: Response) => {
+app.post("/api/v1/signin", async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const validate = loginschema.safeParse(req.body);
     if (!validate.success) {
@@ -72,12 +72,12 @@ app.post("api/v1/signin", async (req: Request, res: Response) => {
     }
 });
 
-app.get("api/v1/health", (req: Request, res: Response) => {
+app.get("/api/v1/health", (req: Request, res: Response) => {
     res.json({ status: "ok", service: "plym-backend" });
 });
 
 // build status, and we can add middleware here later for auth
-app.get("api/v1/build-status", async (req: Request, res: Response) => {
+app.get("/api/v1/build-status", async (req: Request, res: Response) => {
     try {
         const response = await Buildstatus.find()
         res.json({
@@ -92,7 +92,7 @@ app.get("api/v1/build-status", async (req: Request, res: Response) => {
 });
 
 // updating build status only for admin
-app.put("api/v1/build-status", authmiddleware, async (req: Request, res: Response) => {
+app.put("/api/v1/build-status", authmiddleware, async (req: Request, res: Response) => {
     try {
         const { frontend_progress, status } = req.body;
         const validate = buildStatusSchema.safeParse(req.body);
@@ -117,7 +117,7 @@ app.put("api/v1/build-status", authmiddleware, async (req: Request, res: Respons
 })
 
 // list all features
-app.get("api/v1/features", authmiddleware, async (req: Request, res: Response) => {
+app.get("/api/v1/features", authmiddleware, async (req: Request, res: Response) => {
     try {
         const response = await Features.find()
         res.json({
@@ -132,7 +132,7 @@ app.get("api/v1/features", authmiddleware, async (req: Request, res: Response) =
 })
 
 // create features
-app.post("api/v1/features", authmiddleware, async (req: Request, res: Response) => {
+app.post("/api/v1/features", authmiddleware, async (req: Request, res: Response) => {
     try {
         const { name, audience, state } = req.body
         const validate = featureSchema.safeParse(req.body);
@@ -156,7 +156,7 @@ app.post("api/v1/features", authmiddleware, async (req: Request, res: Response) 
 })
 
 // update feature by feature id
-app.put("api/v1/features/:id", authmiddleware, async (req: Request, res: Response) => {
+app.put("/api/v1/features/:id", authmiddleware, async (req: Request, res: Response) => {
     const { id } = req.params
     const { name, audience, state } = req.body
 
@@ -181,7 +181,7 @@ app.put("api/v1/features/:id", authmiddleware, async (req: Request, res: Respons
 })
 
 // getting roadmap endpoint and we can add authmiddleware later
-app.get("api/v1/roadmap", (req: Request, res: Response) => {
+app.get("/api/v1/roadmap", (req: Request, res: Response) => {
     res.json({
         "now": "Core booking flow & café tools",
         "next": "Player profiles, rankings, live passes"
