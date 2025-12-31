@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 // signup End point
-app.post("/api/v1/signup", async (req: Request, res: Response) => {
+app.post("api/v1/signup", async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
     const validate = signupschema.safeParse(req.body);
     if (!validate.success) {
@@ -39,7 +39,7 @@ app.post("/api/v1/signup", async (req: Request, res: Response) => {
 });
 
 // signin End point
-app.post("/api/v1/signin", async (req: Request, res: Response) => {
+app.post("api/v1/signin", async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const validate = loginschema.safeParse(req.body);
     if (!validate.success) {
